@@ -70,10 +70,14 @@ export default function App() {
     }
   }
 
-  const timerCallBack = (timerFlag) => {
+  const timerCallback = (timerFlag) => {
     setTimerEnd(timerFlag)
     initialize()
   }
+
+  useEffect(() => {
+    initialize()
+  }, [])
 
 
   return (
@@ -94,9 +98,31 @@ export default function App() {
         onPress={checkDices} 
         title='Same dices' >
       </Button>
+      <View style={{ display: timerEnd ? 'none' : 'flex' }}>
+        <CountDownTimer
+          ref={refTimer}
+          timestamp={60}
+          timerCallback={timerCallback}
+          containerStyle={{
+            height: 40,
+            width: 100,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 35,
+            backgroundColor: '#2196f3',
+            marginTop:15
+          }}
+          textStyle={{
+            fontSize: 25,
+            color: '#FFFFFF',
+            fontWeight: '300',
+            letterSpacing: 0.25,
+          }}
+        />
+      </View>
       <Text style={styles.status}>{status}</Text>
-      <Text style={styles.hits}>{nbrOfHits}</Text>
-      <Text style={styles.fast}>{nbrOfFast}</Text>
+      <Text style={styles.hits}>Hits: {nbrOfHits}</Text>
+      <Text style={styles.fast}>Fast reactions: {nbrOfFast}</Text>
       <StatusBar style="auto" />
     </View>
   );
